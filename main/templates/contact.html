@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact | Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-control {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border-color: #ffcc00;
+        box-shadow: none;
+    }
+
+    .contact-container {
+        padding: 60px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-grow: 1;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <div class="container col-lg-5">
+        <div class="p-5 border border-secondary border-opacity-25 rounded-4" style="background: rgba(20,20,20,0.8);">
+            <h2 class="mb-4 fw-bold text-gold">Get in Touch</h2>
+            {% if success %}
+            <div class="alert alert-success">Message sent successfully! I'll get back to you soon.</div>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea name="message" rows="5" class="form-control" required></textarea>
+                </div>
+                <button type="submit" class="btn-gold w-100 rounded-pill">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

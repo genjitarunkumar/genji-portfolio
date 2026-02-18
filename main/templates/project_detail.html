@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} | Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .project-card {
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: 30px;
+        padding: 4rem;
+        margin-top: 2rem;
+    }
+
+    .tech-tag {
+        background: rgba(255, 204, 0, 0.1);
+        border: 1px solid rgba(255, 204, 0, 0.3);
+        color: var(--accent-gold);
+        padding: 0.5rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .btn-outline-gold {
+        border: 2px solid var(--accent-gold);
+        color: var(--accent-gold);
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .btn-outline-gold:hover {
+        background: var(--accent-gold);
+        color: black;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="project-card" data-aos="fade-up">
+                <nav aria-label="breadcrumb" class="mb-4">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-white-50">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'projects' %}" class="text-white-50">Projects</a>
+                        </li>
+                        <li class="breadcrumb-item active text-gold" aria-current="page">{{ project.title }}</li>
+                    </ol>
+                </nav>
+
+                <h1 class="display-2 fw-bold mb-4">{{ project.title }}</h1>
+
+                <div class="mb-5 d-flex align-items-center gap-3 flex-wrap">
+                    <span class="tech-tag">{{ project.technologies }}</span>
+                    <span class="text-white-50 font-monospace">{{ project.created_date|date:"F d, Y" }}</span>
+                </div>
+
+                <div class="description-text mb-5 fs-5 text-white-80">
+                    {{ project.description|linebreaks }}
+                </div>
+
+                <div class="d-flex gap-3 flex-wrap pt-4 border-top border-secondary border-opacity-25">
+                    {% if project.github_link %}
+                    <a href="{{ project.github_link }}" target="_blank" class="btn-outline-gold">
+                        <i class="bi bi-github me-2"></i>GitHub Source
+                    </a>
+                    {% endif %}
+                    {% if project.live_link %}
+                    <a href="{{ project.live_link }}" target="_blank" class="btn-gold">
+                        <i class="bi bi-rocket-takeoff me-2"></i>Live Demo
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

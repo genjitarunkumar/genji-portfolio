@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.name }} | Portfolio</title>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- AOS Animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent-gold: #ffcc00;
+            --accent-glow: rgba(255, 204, 0, 0.4);
+            --bg-deep: #050505;
+            --glass-bg: rgba(20, 20, 20, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-gold: #ffcc00;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image:
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+                url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=1974');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1,
+        h2,
+        h3,
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 1rem 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: var(--accent-gold) !important;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
+        }
+
+        .hero-title span {
+            color: var(--accent-gold);
+            position: relative;
+        }
+
+        .hero-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--accent-gold);
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 3rem;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.05),
+                    transparent);
+            transition: 0.5s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--accent-gold);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8), 0 0 20px var(--accent-glow);
+        }
+
+        .btn-gold {
+            background: var(--accent-gold);
+            color: black;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            box-shadow: 0 10px 20px var(--accent-glow);
+        }
+
+        .btn-gold:hover {
+            background: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px var(--accent-glow);
+            color: black;
+        }
+
+        .skill-tag {
+            background: rgba(255, 204, 0, 0.05);
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            color: var(--accent-gold);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            margin: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .skill-tag:hover {
+            background: var(--accent-gold);
+            color: black;
+            transform: scale(1.1);
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background: #25d366;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
+            z-index: 1000;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(15deg);
+            color: white;
+        }
+
+        .form-input {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: white !important;
+            border-radius: 15px !important;
+            padding: 1rem !important;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-gold) !important;
+            box-shadow: 0 0 15px var(--accent-glow) !important;
+        }
+
+        /* Floating particles decorative */
+        .decoration-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            filter: blur(80px);
+            opacity: 0.1;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating Background Elements -->
+    <div class="decoration-circle" style="top: 10%; left: 5%; width: 400px; height: 400px;"></div>
+    <div class="decoration-circle" style="bottom: 10%; right: 5%; width: 500px; height: 500px;"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">TG<span>.</span></a>
+            <div class="d-flex align-items-center">
+                <a href="https://github.com/genjitarunkumar" target="_blank" class="text-white px-3 fs-4"><i
+                        class="bi bi-github"></i></a>
+                <a href="https://linkedin.com/in/tarun-kumar123" target="_blank" class="text-white px-3 fs-4"><i
+                        class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- HERO SECTION -->
+        <section class="hero-section" data-aos="zoom-out">
+            <div class="col-lg-10 mx-auto">
+                <h1 class="hero-title fw-bold">
+                    Design. Code.<br><span>Integrate.</span>
+                </h1>
+                <p class="fs-4 text-white-50 mb-5 fw-light">
+                    I am <b class="text-white">{{ profile.name }}</b>, {{ profile.summary|truncatewords:20 }}
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-4">
+                    <a href="#projects" class="btn-gold">View my work</a>
+                    <a href="/static/Tarun_Kumar_Genji_Resume.pdf"
+                        class="btn btn-outline-light px-5 py-3 rounded-pill fw-bold">Download CV</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- BIO -->
+        <section class="mb-5 pb-5" data-aos="fade-up">
+            <div class="glass-card text-center">
+                <div class="row align-items-center">
+                    <div class="col-md-4 mb-4 mb-md-0 text-md-start">
+                        <h2 class="display-5 fw-bold text-gold">Briefly...</h2>
+                        <p class="text-white-50">Career Highlights</p>
+                    </div>
+                    <div class="col-md-8 text-md-start border-start border-secondary ps-md-5">
+                        <p class="fs-5 mb-0 font-monospace text-white-50">
+                            Education: {{ profile.university }}<br>
+                            Major: {{ profile.branch }}<br>
+                            Role: Passionate Software Developer
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section class="mb-5 pt-5" data-aos="fade-up">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">My Toolbelt</h2>
+                <div class="mx-auto bg-warning mt-2" style="width: 100px; height: 3px;"></div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-center">
+                {% for skill in skills %}
+                <div class="skill-tag" data-aos="flip-up" data-aos-delay="{{ forloop.counter|add:100 }}">{{
+                    skill.skill_name }}</div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="mb-5 py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">Selected Works</h2>
+                <p class="text-white-50 px-4">A showcase of things I've built with passion and code.</p>
+            </div>
+            <div class="row g-5">
+                {% for project in projects %}
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="glass-card h-100 d-flex flex-column">
+                        <div class="mb-4">
+                            <span class="text-gold small fw-bold text-uppercase tracking-widest">Project No. 0{{
+                                forloop.counter }}</span>
+                            <h3 class="display-6 fw-bold mt-2">{{ project.title }}</h3>
+                        </div>
+                        <p class="text-white-50 fs-5 mb-4">{{ project.description }}</p>
+                        <div class="mt-auto">
+                            <div class="mb-4 d-flex align-items-center">
+                                <i class="bi bi-cpu text-gold me-3 fs-4"></i>
+                                <span class="small text-white-50">{{ project.technologies }}</span>
+                            </div>
+                            {% if project.github_link %}
+                            <a href="{{ project.github_link }}" target="_blank"
+                                class="btn btn-outline-warning w-100 rounded-pill py-2 fw-bold">
+                                Explore Repository
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="mb-5 py-5" data-aos="fade-in">
+            <div class="glass-card p-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-5 text-center text-lg-start">
+                        <h2 class="display-4 fw-bold mb-4">Start a<br><span class="text-gold">Conversation</span></h2>
+                        <p class="text-white-50 fs-5 mb-4">I'm currently available for freelance work and full-time
+                            positions. Reach out!</p>
+                        <div class="d-flex flex-column gap-3 fs-5">
+                            <p><i class="bi bi-envelope text-gold me-3"></i>{{ profile.email }}</p>
+                            <p><i class="bi bi-geo-alt text-gold me-3"></i>Visakhapatnam, India</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <form id="whatsappForm"
+                            class="bg-black bg-opacity-25 p-4 rounded-4 border border-secondary border-opacity-25">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <input type="text" id="name" class="form-control form-input" placeholder="Name"
+                                        required>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" id="email" class="form-control form-input" placeholder="Email"
+                                        required>
+                                </div>
+                                <div class="col-12">
+                                    <textarea id="message" class="form-control form-input" rows="4"
+                                        placeholder="Your Message" required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" onclick="sendToWhatsApp()" class="btn-gold w-100">
+                                        Send via WhatsApp <i class="bi bi-whatsapp ms-2"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="text-center py-5 border-top border-secondary border-opacity-25 mt-5">
+            <p class="text-white-50">© 2026 <b>{{ profile.name }}</b>. All rights reserved.</p>
+            <p class="small text-gold-50 mb-0">Designed for the modern web.</p>
+        </footer>
+    </div>
+
+    <!-- Floating Action Button -->
+    <a href="https://wa.me/{{ profile.phone_number }}" class="whatsapp-float" target="_blank">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1200,
+            once: false,
+            mirror: true
+        });
+
+        async function sendToWhatsApp() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const myNumber = "{{ profile.phone_number }}";
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            if (!name || !email || !message) {
+                alert("Please tell me who you are first!");
+                return;
+            }
+
+            // Create form data for the POST request
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('message', message);
+            formData.append('csrfmiddlewaretoken', csrfToken);
+
+            try {
+                // Submit to Django backend to save in database
+                await fetch('', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': csrfToken
+                    }
+                });
+
+                // Construct WhatsApp message
+                const fullMessage = `Hi! This is ${name}.%0AEmail: ${email}%0A%0A${message}`;
+                const whatsappUrl = `https://wa.me/${myNumber}?text=${fullMessage}`;
+
+                // Open WhatsApp
+                window.open(whatsappUrl, '_blank');
+
+                // Clear the form
+                document.getElementById('name').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('message').value = '';
+            } catch (error) {
+                console.error('Error:', error);
+                alert("There was an error sending your message. Please try again.");
+            }
+        }
+    </script>
+
+</body>
+
+</html>
