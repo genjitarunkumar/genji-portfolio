@@ -19,7 +19,7 @@ def populate():
     Profile.objects.create(
         name="Tarun Kumar Genji",
         branch="Computer Science Engineering",
-        university="Andhra University",
+        university="Lovely Professional University",
         email="tarunkumargenji@gmail.com",
         phone_number="919494959711",
         summary="A dedicated Software Engineer specializing in building robust and scalable web applications using Python and Django. Passionate about clean code, performance optimization, and creating intuitive user experiences."
@@ -34,27 +34,34 @@ def populate():
 
     # Projects
     Project.objects.create(
-        title="AI-Powered Portfolio",
-        description="A modern portfolio website featuring dynamic animations, glassmorphism design, and a Django backend with WhatsApp integration.",
-        technologies="Django, Bootstrap 5, AOS Animation, SQLite",
-        github_link="https://github.com/genjitarunkumar/genji-portfolio",
-        live_link="https://genji-portfolio.herokuapp.com"
+        title="Market Price Dashboard",
+        description="A comprehensive dashboard tracking commodity prices across Indian markets, providing real-time insights into state and district-wise price trends with minimal, maximal, and modal price records.",
+        technologies="Python, Django, Data Visualization, SQLite",
+        github_link="https://github.com/genjitarunkumar/DASHBOARD",
+        live_link=""
     )
     Project.objects.create(
-        title="EcoTrack - Sustainability App",
-        description="A mobile-responsive web application that helps users track their carbon footprint and suggests sustainable alternatives for daily activities.",
-        technologies="React, Node.js, MongoDB, Chart.js",
-        github_link="https://github.com/genjitarunkumar/ecotrack",
-        live_link="https://ecotrack.example.com"
+        title="Django CI/CD Pipeline",
+        description="Implementation of a robust Continuous Integration and Continuous Deployment pipeline for Django applications, ensuring seamless code delivery using GitHub Actions and Docker.",
+        technologies="Django, GitHub Actions, Docker, CI/CD",
+        github_link="https://github.com/genjitarunkumar/DJANGO_CICD.",
+        live_link=""
     )
     Project.objects.create(
-        title="CloudScale - Infrastructure Manager",
-        description="A dashboard for monitoring and managing multi-cloud infrastructure, providing real-time alerts and resource optimization suggestions.",
-        technologies="Python, Flask, AWS SDK, Vue.js",
-        github_link="https://github.com/genjitarunkumar/cloudscale",
-        live_link="https://cloudscale.example.com"
+        title="AI Chatbot",
+        description="An intelligent chatbot application designed to provide interactive responses and assist users with their queries effectively, utilizing modern NLP techniques.",
+        technologies="Python, NLP, Django, REST API",
+        github_link="https://github.com/genjitarunkumar/Chatbot",
+        live_link=""
     )
-    print("3 projects created")
+    Project.objects.create(
+        title="Django To-Do Application",
+        description="A feature-rich task management application built with Django, featuring user authentication, task categorization, and an intuitive user interface.",
+        technologies="Django, Bootstrap 5, SQLite, Authentication",
+        github_link="https://github.com/genjitarunkumar/django-to---do-list-",
+        live_link=""
+    )
+    print("4 projects created")
 
 if __name__ == '__main__':
     populate()

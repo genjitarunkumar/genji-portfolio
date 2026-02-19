@@ -6,114 +6,100 @@
 {% block extra_css %}
 <style>
     .hero-section {
-        min-height: 80vh;
+        min-height: 90vh;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
         padding: 60px 0;
-    }
-
-    .hero-title {
-        font-size: clamp(3rem, 10vw, 6rem);
-        line-height: 1.1;
-        margin-bottom: 2rem;
-        color: white;
-        text-shadow: 0 0 30px rgba(255, 204, 0, 0.3);
-    }
-
-    .hero-title span {
-        color: var(--accent-gold);
         position: relative;
     }
 
-    .hero-title span::after {
-        content: '';
-        position: absolute;
-        bottom: 10px;
-        left: 0;
-        width: 100%;
-        height: 8px;
-        background: var(--accent-gold);
-        opacity: 0.3;
-        z-index: -1;
+    .hero-title {
+        font-size: clamp(3.5rem, 12vw, 7rem);
+        line-height: 0.95;
+        margin-bottom: 2rem;
+        color: white;
+        text-shadow: 0 0 50px rgba(99, 102, 241, 0.2);
+        letter-spacing: -2px;
+    }
+
+    .hero-title span {
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        display: inline-block;
+    }
+
+    .typewriter-content::after {
+        content: '|';
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
     }
 
     .skill-tag {
-        background: rgba(255, 204, 0, 0.05);
-        border: 1px solid rgba(255, 204, 0, 0.3);
-        color: var(--accent-gold);
-        padding: 0.6rem 1.5rem;
-        border-radius: 50px;
-        margin: 0.5rem;
+        background: rgba(99, 102, 241, 0.03);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        color: var(--accent-secondary);
+        padding: 0.8rem 2rem;
+        border-radius: 12px;
+        margin: 0.8rem;
         font-weight: 600;
-        font-size: 0.9rem;
-        transition: 0.3s;
+        font-size: 1rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(5px);
     }
 
     .skill-tag:hover {
-        background: var(--accent-gold);
-        color: black;
-        transform: scale(1.1);
-    }
-
-    .social-btn {
-        font-size: 1.5rem;
-        width: 60px;
-        height: 60px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        margin: 0 10px;
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
+        background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
         color: white;
-        transition: 0.4s;
-    }
-
-    .social-btn:hover {
-        background: var(--accent-gold);
-        color: black;
-        transform: translateY(-5px);
+        transform: translateY(-5px) scale(1.05);
         box-shadow: 0 10px 20px var(--accent-glow);
+        border-color: transparent;
     }
 
-    .whatsapp-float {
-        position: fixed;
-        bottom: 40px;
-        right: 40px;
-        background: #25d366;
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 35px;
-        color: white;
-        box-shadow: 0 10px 30px rgba(37, 211, 102, 0.5);
-        z-index: 1000;
-        transition: 0.3s;
-        text-decoration: none;
+    /* 3D Tilt for project cards */
+    .project-card {
+        transform-style: preserve-3d;
+        perspective: 1000px;
     }
 
-    .whatsapp-float:hover {
-        transform: scale(1.1) rotate(15deg);
-        color: white;
+    .project-inner {
+        transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    .form-input {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        color: white !important;
-        border-radius: 15px !important;
-        padding: 1rem !important;
+    .project-card:hover .project-inner {
+        transform: rotateX(5deg) rotateY(2deg);
     }
 
-    .form-input:focus {
-        border-color: var(--accent-gold) !important;
-        box-shadow: 0 0 15px var(--accent-glow) !important;
+    .magnetic-btn {
+        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        display: inline-block;
+    }
+
+    .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 3rem;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: var(--accent-primary);
+        border-radius: 2px;
+        box-shadow: 0 0 10px var(--accent-glow);
     }
 </style>
 {% endblock %}
@@ -124,15 +110,16 @@
     <section class="hero-section" data-aos="zoom-out">
         <div class="col-lg-10 mx-auto">
             <h1 class="hero-title fw-bold">
-                Design. Code.<br><span>Integrate.</span>
+                <span class="typewriter" data-words='["Design.", "Code.", "Integrate."]'></span>
             </h1>
-            <p class="fs-4 text-white-50 mb-5 fw-light">
-                I am <b class="text-white">{{ profile.name }}</b>, {{ profile.summary|truncatewords:20 }}
+            <p class="fs-4 text-white-50 mb-5 fw-light" data-aos="fade-up" data-aos-delay="200">
+                I am <b class="text-white">{{ profile.name }}</b>, <span class="text-info">{{ profile.branch }}</span>
+                graduate from {{ profile.university }}.
             </p>
-            <div class="d-flex flex-wrap justify-content-center gap-4">
-                <a href="#projects" class="btn-gold">View my work</a>
+            <div class="d-flex flex-wrap justify-content-center gap-4" data-aos="fade-up" data-aos-delay="400">
+                <a href="#projects" class="btn-gold magnetic-btn">Explore My Work</a>
                 <a href="/static/Tarun_Kumar_Genji_Resume.pdf"
-                    class="btn btn-outline-light px-5 py-3 rounded-pill fw-bold">Download CV</a>
+                    class="btn btn-outline-light px-5 py-3 rounded-pill fw-bold magnetic-btn">Download CV</a>
             </div>
         </div>
     </section>
@@ -142,7 +129,7 @@
         <div class="glass-card text-center">
             <div class="row align-items-center">
                 <div class="col-md-4 mb-4 mb-md-0 text-md-start">
-                    <h2 class="display-5 fw-bold text-gold">Briefly...</h2>
+                    <h2 class="display-5 fw-bold text-info">Briefly...</h2>
                     <p class="text-white-50">Career Highlights</p>
                 </div>
                 <div class="col-md-8 text-md-start border-start border-secondary ps-md-5">
@@ -160,7 +147,7 @@
     <section class="mb-5 pt-5" data-aos="fade-up">
         <div class="text-center mb-5">
             <h2 class="display-4 fw-bold">My Toolbelt</h2>
-            <div class="mx-auto bg-warning mt-2" style="width: 100px; height: 3px;"></div>
+            <div class="mx-auto bg-info mt-2" style="width: 100px; height: 3px;"></div>
         </div>
         <div class="d-flex flex-wrap justify-content-center">
             {% for skill in skills %}
@@ -173,37 +160,40 @@
     <!-- PROJECTS -->
     <section id="projects" class="mb-5 py-5">
         <div class="text-center mb-5">
-            <h2 class="display-4 fw-bold">Selected Works</h2>
+            <h2 class="display-4 fw-bold section-title">Selected Works</h2>
             <p class="text-white-50 px-4">A showcase of things I've built with passion and code.</p>
         </div>
         <div class="row g-5">
             {% for project in projects %}
-            <div class="col-lg-6" data-aos="fade-up">
-                <div class="glass-card h-100 d-flex flex-column">
-                    <div class="mb-4">
-                        <span class="text-gold small fw-bold text-uppercase tracking-widest">Project No. 0{{
-                            forloop.counter }}</span>
-                        <h3 class="display-6 fw-bold mt-2">{{ project.title }}</h3>
-                    </div>
-                    <p class="text-white-50 fs-5 mb-4">{{ project.description }}</p>
-                    <div class="mt-auto">
-                        <div class="mb-4 d-flex align-items-center">
-                            <i class="bi bi-cpu text-gold me-3 fs-4"></i>
-                            <span class="small text-white-50">{{ project.technologies }}</span>
+            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                <div class="project-card h-100">
+                    <div class="glass-card project-inner h-100 d-flex flex-column">
+                        <div class="mb-4">
+                            <span class="text-info small fw-bold text-uppercase tracking-widest">Project No. 0{{
+                                forloop.counter }}</span>
+                            <h3 class="display-6 fw-bold mt-2">{{ project.title }}</h3>
                         </div>
-                        {% if project.github_link %}
-                        <a href="{{ project.github_link }}" target="_blank"
-                            class="btn btn-outline-warning w-100 rounded-pill py-2 fw-bold">
-                            Explore Repository
-                        </a>
-                        {% endif %}
+                        <p class="text-white-50 fs-5 mb-4">{{ project.description }}</p>
+                        <div class="mt-auto">
+                            <div class="mb-4 d-flex align-items-center">
+                                <i class="bi bi-cpu text-info me-3 fs-4"></i>
+                                <span class="small text-white-50">{{ project.technologies }}</span>
+                            </div>
+                            {% if project.github_link %}
+                            <a href="{{ project.github_link }}" target="_blank"
+                                class="btn btn-outline-info w-100 rounded-pill py-2 fw-bold magnetic-btn">
+                                Explore Repository
+                            </a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
         <div class="text-center mt-5">
-            <a href="{% url 'projects' %}" class="btn btn-link text-gold text-decoration-none fw-bold">View All Projects
+            <a href="{% url 'projects' %}" class="btn btn-link text-info text-decoration-none fw-bold magnetic-btn">View
+                All Projects
                 <i class="bi bi-arrow-right"></i></a>
         </div>
     </section>
@@ -235,12 +225,12 @@
         <div class="glass-card p-5">
             <div class="row g-5 align-items-center">
                 <div class="col-lg-5 text-center text-lg-start">
-                    <h2 class="display-4 fw-bold mb-4">Start a<br><span class="text-gold">Conversation</span></h2>
+                    <h2 class="display-4 fw-bold mb-4">Start a<br><span class="text-info">Conversation</span></h2>
                     <p class="text-white-50 fs-5 mb-4">I'm currently available for freelance work and full-time
                         positions. Reach out!</p>
                     <div class="d-flex flex-column gap-3 fs-5">
-                        <p><i class="bi bi-envelope text-gold me-3"></i>{{ profile.email }}</p>
-                        <p><i class="bi bi-geo-alt text-gold me-3"></i>Visakhapatnam, India</p>
+                        <p><i class="bi bi-envelope text-info me-3"></i>{{ profile.email }}</p>
+                        <p><i class="bi bi-geo-alt text-info me-3"></i>Visakhapatnam, India</p>
                     </div>
                 </div>
                 <div class="col-lg-7">
@@ -290,6 +280,71 @@
 
 {% block extra_js %}
 <script>
+    // Typewriter Effect
+    class TypeWriter {
+        constructor(txtElement, words, wait = 3000) {
+            this.txtElement = txtElement;
+            this.words = words;
+            this.txt = '';
+            this.wordIndex = 0;
+            this.wait = parseInt(wait, 10);
+            this.type();
+            this.isDeleting = false;
+        }
+
+        type() {
+            const current = this.wordIndex % this.words.length;
+            const fullTxt = this.words[current];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.txtElement.innerHTML = `<span class="typewriter-content">${this.txt}</span>`;
+
+            let typeSpeed = 100;
+
+            if (this.isDeleting) {
+                typeSpeed /= 2;
+            }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                typeSpeed = this.wait;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.wordIndex++;
+                typeSpeed = 500;
+            }
+
+            setTimeout(() => this.type(), typeSpeed);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const txtElement = document.querySelector('.typewriter');
+        if (txtElement) {
+            const words = JSON.parse(txtElement.getAttribute('data-words'));
+            new TypeWriter(txtElement, words);
+        }
+    });
+
+    // Magnetic Button Effect
+    const magneticBtns = document.querySelectorAll('.magnetic-btn');
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = (e.clientX - rect.left - rect.width / 2) * 0.4;
+            const y = (e.clientY - rect.top - rect.height / 2) * 0.4;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0px, 0px)';
+        });
+    });
+
     function sendToWhatsApp() {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
