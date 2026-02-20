@@ -25,8 +25,17 @@ def home(request):
             send_mail(
                 subject=f"📬 New Contact Message from {name}",
                 message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-                from_email=email,
+                from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=['tarunkumargenji@gmail.com'],
+                fail_silently=False,
+            )
+            
+            # Send confirmation to user
+            send_mail(
+                subject="Thank you for contacting Tarun",
+                message=f"Hi {name},\n\nI have received your message and will get back to you shortly.\n\nBest regards,\nTarun Kumar Genji",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
                 fail_silently=False,
             )
         except Exception:
@@ -62,14 +71,27 @@ def contact(request):
             message=message
         )
 
-        # Send email to yourself
-        send_mail(
-            subject=f"📬 New Contact Message from {name}",
-            message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-            from_email=email,
-            recipient_list=['tarunkumargenji@gmail.com'],
-            fail_silently=False,
-        )
+        # Send email to admin
+        try:
+            send_mail(
+                subject=f"📬 New Contact Message from {name}",
+                message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
+                from_email='tarunkumargenji@gmail.com',  # Your authenticated email
+                recipient_list=['tarunkumargenji@gmail.com'],
+                fail_silently=False,
+            )
+            
+            # Send confirmation to user
+            send_mail(
+                subject="Thank you for contacting Tarun",
+                message=f"Hi {name},\n\nI have received your message and will get back to you shortly.\n\nBest regards,\nTarun Kumar Genji",
+                from_email='tarunkumargenji@gmail.com',
+                recipient_list=[email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            print(f"Email error: {e}")
+            pass
         success = True
         
     return render(request, 'contact.html', {'success': success})

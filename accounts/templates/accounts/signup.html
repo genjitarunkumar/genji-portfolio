@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Signup | Portfolio{% endblock %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="glass-card p-5" style="max-width: 400px; width: 100%;">
+        <h2 class="text-center mb-4 fw-bold">Sign Up</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn-gold w-100 mt-3">Sign Up</button>
+        </form>
+        <div class="text-center mt-3">
+            <a href="{% url 'login' %}" class="text-info text-decoration-none">Already have an account? Login</a>
+        </div>
+    </div>
+</div>
+<style>
+    /* Quick fix for django default form rendering */
+    input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 10px;
+        border-radius: 8px;
+        width: 100%;
+    }
+
+    input:focus {
+        background: rgba(255, 255, 255, 0.1);
+        outline: none;
+        border-color: var(--accent-secondary);
+        color: white;
+    }
+</style>
+{% endblock %}
