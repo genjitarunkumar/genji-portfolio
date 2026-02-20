@@ -246,6 +246,9 @@
 
                     {% if user.is_authenticated %}
                     <li class="nav-item">
+                        <a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{% url 'logout' %}"
                             class="btn btn-sm btn-outline-info ms-3 px-3 rounded-pill">Logout</a>
                     </li>
