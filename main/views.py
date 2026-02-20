@@ -21,27 +21,26 @@ def home(request):
             message=message
         )
 
-        # Send email to yourself
+        # Send message directly to the user
         try:
             send_mail(
-                subject=f"📬 New Contact Message from {name}",
-                message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=['tarunkumargenji@gmail.com'],
-                fail_silently=False,
-            )
-            
-            # Send confirmation to user
-            send_mail(
-                subject="Thank you for contacting Tarun",
-                message=f"Hi {name},\n\nI have received your message and will get back to you shortly.\n\nBest regards,\nTarun Kumar Genji",
+                subject=f"Message from Tarun Kumar Genji",
+                message=f"Hi {name},\n\nYou have a new message:\n\n{message}\n\nBest regards,\nTarun Kumar Genji",
                 from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[email],
                 fail_silently=False,
             )
+            # Send notification to you (the Admin)
+            send_mail(
+                subject=f"📬 New Contact Message from {name}",
+                message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
         except Exception as e:
             print(f"Error sending email in home view: {e}")
-            pass # Silent fail if email settings aren't configured
+            pass
             
         success = True
 
@@ -73,22 +72,21 @@ def contact(request):
             message=message
         )
 
-        # Send email to admin
+        # Send message directly to the user
         try:
+            send_mail(
+                subject=f"Message from Tarun Kumar Genji",
+                message=f"Hi {name},\n\nYou have a new message:\n\n{message}\n\nBest regards,\nTarun Kumar Genji",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+                fail_silently=False,
+            )
+            # Send notification to you (the Admin)
             send_mail(
                 subject=f"📬 New Contact Message from {name}",
                 message=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-                from_email='tarunkumargenji@gmail.com',  # Your authenticated email
-                recipient_list=['tarunkumargenji@gmail.com'],
-                fail_silently=False,
-            )
-            
-            # Send confirmation to user
-            send_mail(
-                subject="Thank you for contacting Tarun",
-                message=f"Hi {name},\n\nI have received your message and will get back to you shortly.\n\nBest regards,\nTarun Kumar Genji",
-                from_email='tarunkumargenji@gmail.com',
-                recipient_list=[email],
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.EMAIL_HOST_USER],
                 fail_silently=False,
             )
         except Exception as e:
