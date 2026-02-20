@@ -11,4 +11,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 RUN python manage.py collectstatic --noinput
 
-CMD sh -c "python manage.py migrate --noinput && gunicorn portfolio.wsgi:application --bind 0.0.0.0:8000"
+CMD sh -c "python manage.py migrate --noinput && python populate_db.py && python create_admin.py && gunicorn portfolio.wsgi:application --bind 0.0.0.0:8000"
