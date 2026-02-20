@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.mail import send_mail
+from django.conf import settings
 from .models import Profile, Skill, Project, ContactMessage
 
 def home(request):
@@ -38,7 +39,8 @@ def home(request):
                 recipient_list=[email],
                 fail_silently=False,
             )
-        except Exception:
+        except Exception as e:
+            print(f"Error sending email in home view: {e}")
             pass # Silent fail if email settings aren't configured
             
         success = True
