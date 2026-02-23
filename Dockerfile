@@ -17,4 +17,8 @@ COPY . .
 # Run collectstatic
 RUN python manage.py collectstatic --noinput
 
-CMD ["gunicorn", "portfolio_site.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Make start.sh executable
+RUN chmod +x start.sh
+
+CMD ["./start.sh"]
+
