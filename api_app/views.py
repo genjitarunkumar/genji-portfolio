@@ -1,10 +1,20 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+from rest_framework import generics, permissions
 from projects_app.models import Project
-from .serializers import ProjectSerializer
+from contact_app.models import ContactMessage
+from .serializers import ProjectSerializer, ContactSerializer
 
-@api_view(['GET'])
-def projects_api(request):
-    projects = Project.objects.all()
-    serializer = ProjectSerializer(projects, many=True)
-    return Response(serializer.data)
+class ProjectListAPI(generics.ListCreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class ProjectDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    lookup_field = 'slug'
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class ContactCreateAPI(generics.CreateAPIView):
+    queryset = ContactMessage.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [permissions.AllowAny]

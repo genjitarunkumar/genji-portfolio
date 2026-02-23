@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="animate-in"
+    style="max-width: 400px; margin: 4rem auto; background: var(--card-bg); padding: 3rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+    <h2 style="margin-bottom: 2rem; text-align: center;">Create Account</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div style="margin-bottom: 1.5rem;">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+    </form>
+    <p style="margin-top: 2rem; text-align: center; color: var(--text-muted);">
+        Already have an account? <a href="{% url 'login' %}" style="color: var(--primary);">Login here</a>
+    </p>
+</div>
+{% endblock %}

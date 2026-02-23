@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}About Me{% endblock %}
+
+{% block content %}
+<div class="animate-in">
+    <h1 style="font-size: 3rem; margin-bottom: 2rem;">About Me</h1>
+
+    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 4rem;">
+        <div>
+            {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="Profile"
+                style="width: 100%; border-radius: 20px; border: 1px solid var(--glass-border);">
+            {% else %}
+            <div
+                style="width: 100%; aspect-ratio: 1; background: var(--glass); border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border);">
+                <span style="color: var(--text-muted);">No Photo Added</span>
+            </div>
+            {% endif %}
+
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Education</h3>
+                <p style="color: var(--text-muted);">{{ profile.education|linebreaks|default:"University of
+                    Technology\nB.S. in Computer Science" }}</p>
+            </div>
+        </div>
+
+        <div>
+            <h2 style="margin-bottom: 1rem;">Bio</h2>
+            <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 3rem;">
+                {{ profile.bio|default:"I am a passionate developer with experience in building robust web
+                applications." }}
+            </p>
+
+            <h2 style="margin-bottom: 1.5rem;">Professional Experience</h2>
+            <div style="border-left: 2px solid var(--primary); padding-left: 2rem;">
+                {{ profile.experience|linebreaks|default:"**Senior Dev** @ Tech Corp (2020-Present)\nLeading frontend
+                development using React and CSS modules." }}
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <a href="{{ profile.resume.url|default:'#' }}" class="btn btn-primary">Download My Resume (PDF)</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

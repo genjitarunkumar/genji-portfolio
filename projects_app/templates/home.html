@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="animate-in" style="text-align: center; padding: 4rem 0;">
+    <h1 style="font-size: 4rem; margin-bottom: 1rem;">Hi, I'm <span style="color: var(--primary);">{{
+            profile.name|default:"Genji" }}</span></h1>
+    <p style="font-size: 1.5rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 2rem;">
+        {{ profile.bio|default:"Full-stack developer focused on building premium web experiences." }}
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center;">
+        <a href="/projects/" class="btn btn-primary">View My Work</a>
+        <a href="/contact/" class="btn btn-outline">Hire Me</a>
+    </div>
+</div>
+
+<section class="animate-in" style="margin-top: 4rem;">
+    <h2
+        style="font-size: 2.5rem; margin-bottom: 2rem; border-bottom: 2px solid var(--glass-border); padding-bottom: 0.5rem;">
+        Core Skills</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        {% for skill in profile.skills.split %}
+        <span
+            style="background: var(--glass); border: 1px solid var(--glass-border); padding: 0.5rem 1.5rem; border-radius: 99px; color: var(--primary);">{{
+            skill }}</span>
+        {% empty %}
+        <span style="color: var(--text-muted);">Django, Python, Docker, JavaScript, React</span>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="animate-in" style="margin-top: 6rem;">
+    <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">Featured Projects</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        {% for project in projects %}
+        <div
+            style="background: var(--card-bg); border: 1px solid var(--glass-border); padding: 2rem; border-radius: 20px;">
+            <h3>{{ project.title }}</h3>
+            <p style="color: var(--text-muted); margin: 1rem 0;">{{ project.description|truncatewords:15 }}</p>
+            <a href="/projects/{{ project.slug }}/" style="color: var(--primary); font-weight: 600;">Details &rarr;</a>
+        </div>
+        {% empty %}
+        <p>No projects yet. <a href="/admin/" style="color: var(--primary);">Add some in Admin!</a></p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

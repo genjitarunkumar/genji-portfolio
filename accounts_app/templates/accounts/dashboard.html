@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="animate-in">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <a href="/admin/" class="btn btn-outline">Go to Admin CRUD</a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div
+            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+            <h3 style="margin-bottom: 1rem;">Your Profile</h3>
+            <p style="color: var(--text-muted); margin-bottom: 1rem;">{{ profile.name }}</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">{{ profile.bio|truncatechars:100 }}</p>
+            <div style="margin-top: 2rem;">
+                <a href="/admin/accounts_app/profile/{{ profile.id }}/change/" class="btn btn-outline"
+                    style="font-size: 0.8rem;">Edit Profile Info</a>
+            </div>
+        </div>
+
+        <div
+            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+            <h3 style="margin-bottom: 1rem;">Site Stats</h3>
+            <ul style="list-style: none; color: var(--text-muted);">
+                <li style="margin-bottom: 0.5rem;">Total Projects: <strong>{{ projects_count|default:"0" }}</strong>
+                </li>
+                <li style="margin-bottom: 0.5rem;">Unread Messages: <strong>0</strong></li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

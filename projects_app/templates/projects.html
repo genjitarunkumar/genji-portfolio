@@ -1,188 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Premium Design</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
+{% extends 'base.html' %}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
-        }
+{% block title %}All Projects{% endblock %}
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
+{% block content %}
+<header class="animate-in" style="text-align: center; margin-bottom: 5rem;">
+    <h1
+        style="font-size: 3.5rem; font-weight: 800; background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+        My Creative Portfolio</h1>
+    <p style="font-size: 1.25rem; color: var(--text-muted);">Showcasing innovative web solutions and elegant designs.
+    </p>
+</header>
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 5rem;
-            animation: fadeInDown 1s ease-out;
-        }
-
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-muted);
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .project-card {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid var(--glass-border);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            border-color: var(--primary);
-        }
-
-        .project-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tech-tag {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            padding: 0.25rem 0.75rem;
-            border-radius: 99px;
-            font-size: 0.8rem;
-            color: var(--primary);
-        }
-
-        .description {
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            flex-grow: 1;
-        }
-
-        .card-links {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-
-        .btn-outline {
-            border: 1px solid var(--glass-border);
-            color: var(--text-main);
-        }
-
-        .btn-outline:hover {
-            background: var(--glass);
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>My Creative Portfolio</h1>
-            <p class="subtitle">Showcasing innovative web solutions and elegant designs.</p>
-        </header>
-
-        <div class="project-grid">
-            {% for project in projects %}
-            <article class="project-card">
-                <h3>{{ project.title }}</h3>
-                <div class="tech-stack">
-                    {% for tech in project.tech_stack.split %}
-                    <span class="tech-tag">{{ tech }}</span>
-                    {% endfor %}
-                </div>
-                <p class="description">{{ project.description|truncatewords:20 }}</p>
-                <div class="card-links">
-                    <a href="{{ project.slug }}/" class="btn btn-primary">View Details</a>
-                    {% if project.github_link %}
-                    <a href="{{ project.github_link }}" target="_blank" class="btn btn-outline">GitHub</a>
-                    {% endif %}
-                </div>
-            </article>
-            {% empty %}
-            <div style="grid-column: 1/-1; text-align: center; padding: 4rem;">
-                <p class="subtitle">No projects found. Check back later!</p>
-            </div>
+<div class="project-grid animate-in"
+    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.5rem;">
+    {% for project in projects %}
+    <article
+        style="background: var(--card-bg); border-radius: 20px; padding: 2rem; border: 1px solid var(--glass-border); transition: 0.4s; display: flex; flex-direction: column;">
+        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">{{ project.title }}</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+            {% for tech in project.tech_stack.split %}
+            <span
+                style="background: var(--glass); border: 1px solid var(--glass-border); padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.8rem; color: var(--primary);">{{
+                tech }}</span>
             {% endfor %}
         </div>
+        <p style="color: var(--text-muted); margin-bottom: 2rem; flex-grow: 1;">{{ project.description|truncatewords:20
+            }}</p>
+        <div style="display: flex; gap: 1rem;">
+            <a href="/projects/{{ project.slug }}/" class="btn btn-primary" style="flex: 1;">View Details</a>
+            {% if project.github_link %}
+            <a href="{{ project.github_link }}" target="_blank" class="btn btn-outline">GitHub</a>
+            {% endif %}
+        </div>
+    </article>
+    {% empty %}
+    <div style="grid-column: 1/-1; text-align: center; padding: 4rem;">
+        <p style="color: var(--text-muted);">No projects found. Check back later!</p>
     </div>
-</body>
-</html>
+    {% endfor %}
+</div>
+{% endblock %}
