@@ -10,6 +10,10 @@ class Profile(models.Model):
     education = models.TextField(blank=True)
     experience = models.TextField(blank=True)
     resume = models.FileField(upload_to='resumes/', blank=True, null=True)
+    github = models.URLField(blank=True, null=True)
+    linkedin = models.URLField(blank=True, null=True)
+    twitter = models.URLField(blank=True, null=True)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return self.name

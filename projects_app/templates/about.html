@@ -1,46 +1,90 @@
 {% extends 'base.html' %}
 
-{% block title %}About Me{% endblock %}
+{% block title %}About Tarun Kumar Genji{% endblock %}
 
 {% block content %}
-<div class="animate-in">
-    <h1 style="font-size: 3rem; margin-bottom: 2rem;">About Me</h1>
+<div class="animate-in" style="max-width: 900px; margin: 0 auto;">
+    <h1 style="font-size: 3.5rem; margin-bottom: 1rem; text-align: center;">Crafting <span
+            style="color: var(--primary);">Intelligent</span> Solutions</h1>
+    <p style="text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-bottom: 5rem;">A deep dive into my
+        journey, education, and professional evolution.</p>
 
-    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 4rem;">
-        <div>
+    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start;">
+        <div style="position: sticky; top: 120px;">
             {% if profile.profile_image %}
-            <img src="{{ profile.profile_image.url }}" alt="Profile"
-                style="width: 100%; border-radius: 20px; border: 1px solid var(--glass-border);">
+            <img src="{{ profile.profile_image.url }}" alt="Tarun Kumar Genji"
+                style="width: 100%; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); border: 1px solid var(--glass-border);">
             {% else %}
             <div
-                style="width: 100%; aspect-ratio: 1; background: var(--glass); border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border);">
-                <span style="color: var(--text-muted);">No Photo Added</span>
+                style="width: 100%; aspect-ratio: 1; background: linear-gradient(135deg, var(--card-bg), var(--bg)); border-radius: 30px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border);">
+                <i class="fas fa-user-tie fa-5x" style="color: var(--primary);"></i>
             </div>
             {% endif %}
 
-            <div style="margin-top: 2rem;">
-                <h3 style="margin-bottom: 1rem;">Education</h3>
-                <p style="color: var(--text-muted);">{{ profile.education|linebreaks|default:"University of
-                    Technology\nB.S. in Computer Science" }}</p>
+            <div style="margin-top: 3rem;">
+                <h3 style="margin-bottom: 1.5rem; font-size: 1.5rem;">Social Connect</h3>
+                <div style="display: flex; flex-direction: column; gap: 1rem;">
+                    {% if profile.linkedin %}<a href="{{ profile.linkedin }}" target="_blank"
+                        style="color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 1rem;"><i
+                            class="fab fa-linkedin fa-lg" style="color: #0077b5;"></i> LinkedIn</a>{% endif %}
+                    {% if profile.github %}<a href="{{ profile.github }}" target="_blank"
+                        style="color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 1rem;"><i
+                            class="fab fa-github fa-lg" style="color: white;"></i> GitHub</a>{% endif %}
+                    {% if profile.phone_number %}<a href="https://wa.me/{{ profile.phone_number }}" target="_blank"
+                        style="color: var(--text-muted); text-decoration: none; display: flex; align-items: center; gap: 1rem;"><i
+                            class="fab fa-whatsapp fa-lg" style="color: #25d366;"></i> WhatsApp</a>{% endif %}
+                </div>
             </div>
         </div>
 
         <div>
-            <h2 style="margin-bottom: 1rem;">Bio</h2>
-            <p style="font-size: 1.2rem; color: var(--text-muted); margin-bottom: 3rem;">
-                {{ profile.bio|default:"I am a passionate developer with experience in building robust web
-                applications." }}
-            </p>
+            <section style="margin-bottom: 4rem;">
+                <h2 style="font-size: 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-user-circle" style="color: var(--primary);"></i> Professional Bio
+                </h2>
+                <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem;">
+                    {{ profile.bio|default:"I am a Bachelor of Technology student specialization in Computer Science and
+                    Engineering at Lovely Professional University. I focus on developing impactful software solutions
+                    using modern technologies like Python and AI." }}
+                </p>
+                <a href="{{ profile.resume.url|default:'#' }}" download class="btn btn-primary"
+                    style="padding: 1rem 2rem; display: flex; align-items: center; gap: 0.8rem; width: fit-content;">
+                    <i class="fas fa-file-download"></i> Download Full Resume (PDF)
+                </a>
+            </section>
 
-            <h2 style="margin-bottom: 1.5rem;">Professional Experience</h2>
-            <div style="border-left: 2px solid var(--primary); padding-left: 2rem;">
-                {{ profile.experience|linebreaks|default:"**Senior Dev** @ Tech Corp (2020-Present)\nLeading frontend
-                development using React and CSS modules." }}
-            </div>
+            <section style="margin-bottom: 4rem;">
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-graduation-cap" style="color: var(--primary);"></i> Academic Qualifications
+                </h2>
+                <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+                    {% for edu in profile.education.splitlines %}
+                    <div
+                        style="background: var(--card-bg); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--primary);">
+                        <p style="font-weight: 600; font-size: 1.1rem; color: var(--text-main);">{{ edu }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
 
-            <div style="margin-top: 3rem;">
-                <a href="{{ profile.resume.url|default:'#' }}" class="btn btn-primary">Download My Resume (PDF)</a>
-            </div>
+            <section>
+                <h2 style="font-size: 2rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;">
+                    <i class="fas fa-briefcase" style="color: var(--primary);"></i> Experience & Training
+                </h2>
+                <div style="display: flex; flex-direction: column; gap: 2rem;">
+                    {% for exp in profile.experience.splitlines %}
+                    <div style="position: relative; padding-left: 2rem;">
+                        <div
+                            style="position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--glass-border);">
+                        </div>
+                        <div
+                            style="position: absolute; left: -4px; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary);">
+                        </div>
+                        <p style="color: var(--text-muted); font-size: 1.1rem;">{{ exp }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
         </div>
     </div>
 </div>

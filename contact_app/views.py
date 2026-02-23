@@ -34,7 +34,17 @@ def contact_view(request):
         except:
             pass
             
+        from accounts_app.models import Profile
+        profile = Profile.objects.first()
+        
         messages.success(request, "Your message has been sent successfully!")
+        
+        # WhatsApp Redirect logic
+        if profile and profile.phone_number:
+            whatsapp_msg = f"Hi, I'm {name}. {message_content}"
+            whatsapp_url = f"https://wa.me/{profile.phone_number}?text={whatsapp_msg.replace(' ', '%20')}"
+            return redirect(whatsapp_url)
+            
         return redirect('contact')
         
     return render(request, 'contact/contact.html')

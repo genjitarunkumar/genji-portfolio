@@ -1,47 +1,130 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Tarun Kumar Genji | Portfolio{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-gradient {
+        background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent),
+            radial-gradient(circle at bottom left, rgba(192, 132, 252, 0.15), transparent);
+    }
+
+    .skill-badge {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        padding: 0.6rem 1.2rem;
+        border-radius: 12px;
+        transition: 0.3s;
+        cursor: default;
+    }
+
+    .skill-badge:hover {
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.1);
+        transform: translateY(-3px);
+    }
+
+    .project-card {
+        background: var(--card-bg);
+        border: 1px solid var(--glass-border);
+        padding: 2.5rem;
+        border-radius: 24px;
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .project-card:hover {
+        transform: scale(1.02);
+        border-color: var(--primary);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="animate-in" style="text-align: center; padding: 4rem 0;">
-    <h1 style="font-size: 4rem; margin-bottom: 1rem;">Hi, I'm <span style="color: var(--primary);">{{
-            profile.name|default:"Genji" }}</span></h1>
-    <p style="font-size: 1.5rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 2rem;">
-        {{ profile.bio|default:"Full-stack developer focused on building premium web experiences." }}
-    </p>
-    <div style="display: flex; gap: 1rem; justify-content: center;">
-        <a href="/projects/" class="btn btn-primary">View My Work</a>
-        <a href="/contact/" class="btn btn-outline">Hire Me</a>
+<div class="hero-gradient" style="border-radius: 40px; padding: 6rem 2rem; margin-bottom: 4rem;">
+    <div class="animate-in" style="text-align: center;">
+        <h1 style="font-size: 5rem; font-weight: 800; line-height: 1.1; margin-bottom: 2rem;">
+            Building the <span
+                style="background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Future</span>
+            with Code.
+        </h1>
+        <p style="font-size: 1.4rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 3rem;">
+            Hi, I'm <strong style="color: var(--text-main);">{{ profile.name|default:"Tarun Kumar Genji" }}</strong>.
+            {{ profile.bio|default:"A passionate developer specializing in AI, Machine Learning, and Web Technologies."
+            }}
+        </p>
+
+        <div style="display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 3rem;">
+            <a href="/projects/" class="btn btn-primary" style="padding: 1rem 2.5rem;">Explore Projects</a>
+            <a href="/contact/" class="btn btn-outline" style="padding: 1rem 2.5rem;">Contact Me</a>
+        </div>
+
+        <div style="display: flex; gap: 2.5rem; justify-content: center; font-size: 2rem;">
+            {% if profile.github %}
+            <a href="{{ profile.github }}" target="_blank" style="color: var(--text-muted); transition: 0.3s;"
+                onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'"><i
+                    class="fab fa-github"></i></a>
+            {% endif %}
+            {% if profile.linkedin %}
+            <a href="{{ profile.linkedin }}" target="_blank" style="color: var(--text-muted); transition: 0.3s;"
+                onmouseover="this.style.color='#0077b5'" onmouseout="this.style.color='var(--text-muted)'"><i
+                    class="fab fa-linkedin"></i></a>
+            {% endif %}
+            {% if profile.phone_number %}
+            <a href="https://wa.me/{{ profile.phone_number }}" target="_blank"
+                style="color: var(--text-muted); transition: 0.3s;" onmouseover="this.style.color='#25d366'"
+                onmouseout="this.style.color='var(--text-muted)'"><i class="fab fa-whatsapp"></i></a>
+            {% endif %}
+        </div>
     </div>
 </div>
 
-<section class="animate-in" style="margin-top: 4rem;">
-    <h2
-        style="font-size: 2.5rem; margin-bottom: 2rem; border-bottom: 2px solid var(--glass-border); padding-bottom: 0.5rem;">
-        Core Skills</h2>
-    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+<section class="animate-in" style="margin-bottom: 8rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem;">Core Expertise</h2>
+        <div style="height: 2px; flex: 1; background: var(--glass-border); margin-left: 2rem;"></div>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 1.2rem;">
         {% for skill in profile.skills.split %}
-        <span
-            style="background: var(--glass); border: 1px solid var(--glass-border); padding: 0.5rem 1.5rem; border-radius: 99px; color: var(--primary);">{{
-            skill }}</span>
+        <div class="skill-badge">
+            <span style="color: var(--primary); font-weight: 600;">{{ skill }}</span>
+        </div>
         {% empty %}
-        <span style="color: var(--text-muted);">Django, Python, Docker, JavaScript, React</span>
+        <span style="color: var(--text-muted);">Python, Django, AI, ML, React, Docker</span>
         {% endfor %}
     </div>
 </section>
 
-<section class="animate-in" style="margin-top: 6rem;">
-    <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">Featured Projects</h2>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+<section class="animate-in">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+        <h2 style="font-size: 2.5rem;">Featured Work</h2>
+        <a href="/projects/" style="color: var(--primary); text-decoration: none; font-weight: 600;">View All &rarr;</a>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2.5rem;">
         {% for project in projects %}
-        <div
-            style="background: var(--card-bg); border: 1px solid var(--glass-border); padding: 2rem; border-radius: 20px;">
-            <h3>{{ project.title }}</h3>
-            <p style="color: var(--text-muted); margin: 1rem 0;">{{ project.description|truncatewords:15 }}</p>
-            <a href="/projects/{{ project.slug }}/" style="color: var(--primary); font-weight: 600;">Details &rarr;</a>
+        <div class="project-card">
+            <div
+                style="height: 8px; width: 40px; background: var(--primary); border-radius: 4px; margin-bottom: 1.5rem;">
+            </div>
+            <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">{{ project.title }}</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
+                {% for tech in project.tech_stack.split %}
+                <span style="font-size: 0.8rem; color: var(--text-muted);">#{{ tech }}</span>
+                {% endfor %}
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.7;">{{
+                project.description|truncatewords:20 }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="/projects/{{ project.slug }}/"
+                    style="color: var(--primary); font-weight: 700; text-decoration: none;">Case Study &rarr;</a>
+                {% if project.github_link %}
+                <a href="{{ project.github_link }}" target="_blank" style="color: var(--text-muted);"><i
+                        class="fab fa-github fa-lg"></i></a>
+                {% endif %}
+            </div>
         </div>
         {% empty %}
-        <p>No projects yet. <a href="/admin/" style="color: var(--primary);">Add some in Admin!</a></p>
+        <p>No projects yet. <a href="/admin/" style="color: var(--primary);">Start creating!</a></p>
         {% endfor %}
     </div>
 </section>

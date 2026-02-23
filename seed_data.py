@@ -18,42 +18,40 @@ def seed():
         admin_user.save()
         print("Admin user created.")
 
-    # Create Profile
-    Profile.objects.get_or_create(
-        user=admin_user,
-        defaults={
-            'name': 'Genji Tarun Kumar',
-            'bio': 'Full-stack Developer passionate about high-performance web applications and premium design aesthetics.',
-            'skills': 'Python Django Docker PostgreSQL JavaScript React REST-API CI/CD',
-            'education': 'B.Tech in Computer Science',
-            'experience': 'Freelance Web Developer (2022 - Present)\nBuilt multiple full-stack applications for diverse clients.'
-        }
-    )
-    print("Profile created/verified.")
+    # Create/Update Profile with CV details
+    profile, created = Profile.objects.get_or_create(user=admin_user)
+    profile.name = "Tarun Kumar Genji"
+    profile.bio = "Computer Science & Engineering student at Lovely Professional University. Passionate about AI, Machine Learning, and Web Technologies. Experienced in building intelligent solutions like AI Chatbots and Health Monitoring Systems."
+    profile.skills = "Python C++ C JavaScript HTML CSS MySQL PowerBI ML GitHub Git VSCode"
+    profile.education = """Lovely Professional University - B.Tech CSE (CGPA: 6.60)
+Sri Viswa Junior College - Intermediate (85.4%)
+Chalapathi Public School - Matriculation (100%)"""
+    profile.experience = """Internship @ Cipher Schools - Data Structures & Algorithms
+Internship @ CSE Pathshala - C Programming Fundamentals
+Social Networks - NPTEL Certificate
+Responsive Web Design - FreeCodeCamp"""
+    profile.github = "https://github.com/genjitarunkumar"
+    profile.linkedin = "https://linkedin.com/in/tarun-kumar123"
+    profile.twitter = "#"
+    profile.phone_number = "919494959711"
+    profile.save()
+    print("Profile updated with CV data.")
 
-    # Create Sample Projects
+    # Create Sample Projects from CV
     projects = [
         {
-            'title': 'E-Commerce Platform',
-            'slug': 'ecommerce-platform',
-            'description': 'A full-featured e-commerce site with payment integration, inventory management, and user authentication.',
-            'tech_stack': 'Django Docker PostgreSQL Redis',
+            'title': 'Agriculture AI Chat Bot',
+            'slug': 'agriculture-ai-chatbot',
+            'description': 'Developed an AI-powered chatbot to assist farmers with crop planning and yield estimation. Implemented ML-based logic to provide fertilizer recommendations, profit analysis, and farming insights.',
+            'tech_stack': 'Python Streamlit Machine-Learning',
             'github_link': 'https://github.com/genjitarunkumar',
             'live_demo': 'https://genji-portfolio-1.onrender.com'
         },
         {
-            'title': 'Smart AI Chatbot',
-            'slug': 'smart-ai-chatbot',
-            'description': 'An intelligent chatbot using natural language processing to handle customer inquiries in real-time.',
-            'tech_stack': 'Python OpenAI API React FastAPI',
-            'github_link': 'https://github.com/genjitarunkumar',
-            'live_demo': 'https://genji-portfolio-1.onrender.com'
-        },
-        {
-            'title': 'Real-time Analytics Dashboard',
-            'slug': 'analytics-dashboard',
-            'description': 'A high-performance dashboard that visualizes server metrics and user behavior in real-time.',
-            'tech_stack': 'Django-Channels WebSockets Chart.js',
+            'title': 'Pulse Monitoring System',
+            'slug': 'pulse-monitoring-system',
+            'description': 'Designed a health monitoring solution using biomedical sensors to measure pulse rate and vital parameters. Applied real-time signal processing and peak detection algorithms.',
+            'tech_stack': 'Biomedical-Sensors Embedded-Systems Microcontrollers',
             'github_link': 'https://github.com/genjitarunkumar',
             'live_demo': 'https://genji-portfolio-1.onrender.com'
         }
@@ -61,7 +59,7 @@ def seed():
 
     for p in projects:
         Project.objects.get_or_create(slug=p['slug'], defaults=p)
-    print("Projects seeded.")
+    print("Projects updated.")
 
 if __name__ == "__main__":
     seed()
