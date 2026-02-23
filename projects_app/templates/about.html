@@ -47,7 +47,8 @@
                     Engineering at Lovely Professional University. I focus on developing impactful software solutions
                     using modern technologies like Python and AI." }}
                 </p>
-                <a href="{{ profile.resume.url|default:'#' }}" download class="btn btn-primary"
+                {% load static %}
+                <a href="{% static 'resume.pdf' %}" download class="btn btn-primary"
                     style="padding: 1rem 2rem; display: flex; align-items: center; gap: 0.8rem; width: fit-content;">
                     <i class="fas fa-file-download"></i> Download Full Resume (PDF)
                 </a>

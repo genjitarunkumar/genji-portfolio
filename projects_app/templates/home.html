@@ -57,8 +57,8 @@
         <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
             <a href="/projects/" class="btn btn-primary" style="padding: 1rem 2.5rem;">Explore Projects</a>
             <a href="/contact/" class="btn btn-outline" style="padding: 1rem 2.5rem;">Contact Me</a>
-            <a href="{% if profile.resume %}{{ profile.resume.url }}{% else %}#{% endif %}" download
-                class="btn btn-outline"
+            {% load static %}
+            <a href="{% static 'resume.pdf' %}" download class="btn btn-outline"
                 style="padding: 1rem 2.5rem; border-color: var(--primary); color: var(--primary);">
                 <i class="fas fa-download" style="margin-right: 8px;"></i> Download CV
             </a>
