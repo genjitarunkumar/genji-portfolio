@@ -9,7 +9,13 @@ def home_view(request):
 
 def about_view(request):
     profile = Profile.objects.first()
-    return render(request, 'about.html', {'profile': profile})
+    education_list = profile.education.splitlines() if profile and profile.education else []
+    experience_list = profile.experience.splitlines() if profile and profile.experience else []
+    return render(request, 'about.html', {
+        'profile': profile, 
+        'education_list': education_list,
+        'experience_list': experience_list
+    })
 
 def projects_list(request):
     projects = Project.objects.all()

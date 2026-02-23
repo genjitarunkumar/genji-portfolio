@@ -58,7 +58,7 @@
                     <i class="fas fa-graduation-cap" style="color: var(--primary);"></i> Academic Qualifications
                 </h2>
                 <div style="display: flex; flex-direction: column; gap: 2.5rem;">
-                    {% for edu in profile.education.splitlines %}
+                    {% for edu in education_list %}
                     <div
                         style="background: var(--card-bg); padding: 1.5rem; border-radius: 15px; border-left: 4px solid var(--primary);">
                         <p style="font-weight: 600; font-size: 1.1rem; color: var(--text-main);">{{ edu }}</p>
@@ -72,7 +72,7 @@
                     <i class="fas fa-briefcase" style="color: var(--primary);"></i> Experience & Training
                 </h2>
                 <div style="display: flex; flex-direction: column; gap: 2rem;">
-                    {% for exp in profile.experience.splitlines %}
+                    {% for exp in experience_list %}
                     <div style="position: relative; padding-left: 2rem;">
                         <div
                             style="position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--glass-border);">
