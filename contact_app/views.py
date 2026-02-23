@@ -40,6 +40,7 @@ def contact_view(request):
         from accounts_app.models import Profile
         profile = Profile.objects.first()
         
+        # Success message should always show
         messages.success(request, "Your message has been sent successfully!")
         
         # WhatsApp Redirect logic

@@ -38,7 +38,7 @@ def dashboard_view(request):
     from django.conf import settings
     from projects_app.models import Project
     
-    profile = Profile.objects.get(user=request.user)
+    profile, created = Profile.objects.get_or_create(user=request.user, defaults={'name': request.user.username})
     projects_count = Project.objects.filter().count()
     
     if request.method == 'POST' and 'send_manual_email' in request.POST:
