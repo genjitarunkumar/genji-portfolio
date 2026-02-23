@@ -13,25 +13,28 @@ def contact_view(request):
         # Save to DB
         ContactMessage.objects.create(name=name, email=email, message=message_content)
         
-        # Send Email to Admin
+        # Send Emails
         try:
+            # 1. Email to YOU (Admin)
             send_mail(
-                subject=f"New Portfolio Message from {name}",
-                message=f"From: {name} <{email}>\n\n{message_content}",
+                subject=f"🔥 New Portfolio Query from {name}",
+                message=f"You have a new message from your portfolio:\n\nName: {name}\nEmail: {email}\n\nMessage:\n{message_content}",
                 from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[settings.EMAIL_HOST_USER], # Admin email
-                fail_silently=True,
+                recipient_list=['tarunkumargenji@gmail.com'],
+                fail_silently=False,
             )
             
-            # Send Confirmation to User
+            # 2. Email to the USER (Visitor)
             send_mail(
-                subject="Thank you for contacting me!",
-                message=f"Hi {name},\n\nI have received your message and will get back to you soon.\n\nBest regards,\nPortfolio Admin",
+                subject="Thank you for reaching out - Tarun Kumar Genji",
+                message=f"Hi {name},\n\nThank you for visiting my portfolio and reaching out! I have received your message and will get back to you as soon as possible.\n\nBest Regards,\nTarun Kumar Genji",
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[email],
-                fail_silently=True,
+                fail_silently=False,
             )
-        except:
+        except Exception as e:
+            print(f"Email Error: {str(e)}")
+            # Even if email fails, we still want to save to DB and continue to WhatsApp
             pass
             
         from accounts_app.models import Profile
