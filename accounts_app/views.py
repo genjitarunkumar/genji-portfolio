@@ -33,5 +33,31 @@ def logout_view(request):
 
 @login_required
 def dashboard_view(request):
+    from django.core.mail import send_mail
+    from django.conf import settings
+    from projects_app.models import Project
+    
     profile = Profile.objects.get(user=request.user)
-    return render(request, 'accounts/dashboard.html', {'profile': profile})
+    projects_count = Project.objects.filter().count()
+    
+    if request.method == 'POST' and 'send_manual_email' in request.POST:
+        target_email = request.POST.get('target_email')
+        custom_message = request.POST.get('custom_message')
+        subject = request.POST.get('subject', 'Message from Tarun Kumar')
+        
+        try:
+            send_mail(
+                subject=subject,
+                message=custom_message,
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[target_email],
+                fail_silently=False,
+            )
+            messages.success(request, f"Email sent successfully to {target_email}!")
+        except Exception as e:
+            messages.error(request, f"Failed to send email: {str(e)}")
+            
+    return render(request, 'accounts/dashboard.html', {
+        'profile': profile,
+        'projects_count': projects_count
+    })

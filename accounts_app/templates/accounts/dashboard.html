@@ -9,7 +9,17 @@
         <a href="/admin/" class="btn btn-outline">Go to Admin CRUD</a>
     </div>
 
+    {% if messages %}
+    {% for message in messages %}
+    <div
+        style="background: rgba(99, 102, 241, 0.2); border: 1px solid var(--primary); color: var(--text-main); padding: 1rem; border-radius: 10px; margin-bottom: 2rem;">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <!-- Existing Profile Card -->
         <div
             style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
             <h3 style="margin-bottom: 1rem;">Your Profile</h3>
@@ -21,6 +31,25 @@
             </div>
         </div>
 
+        <!-- Instant Mailer Form -->
+        <div
+            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
+            <h3 style="margin-bottom: 1.5rem;">Instant Mailer</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="send_manual_email" value="1">
+                <input type="email" name="target_email" placeholder="Recipient Email" required
+                    style="width: 100%; margin-bottom: 1rem; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg); color: white;">
+                <input type="text" name="subject" placeholder="Subject" value="Thanks for visiting us!"
+                    style="width: 100%; margin-bottom: 1rem; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg); color: white;">
+                <textarea name="custom_message" placeholder="Your reply..." required rows="4"
+                    style="width: 100%; margin-bottom: 1.5rem; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg); color: white; resize: none;"></textarea>
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 0.9rem;">Send Email
+                    Now</button>
+            </form>
+        </div>
+
+        <!-- Site Stats -->
         <div
             style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
             <h3 style="margin-bottom: 1rem;">Site Stats</h3>
