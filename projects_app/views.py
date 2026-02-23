@@ -4,7 +4,7 @@ from accounts_app.models import Profile
 
 def home_view(request):
     profile = Profile.objects.first()
-    projects = Project.objects.all()[:3]
+    projects = Project.objects.all().order_by('-created_date')[:3]
     return render(request, 'home.html', {'profile': profile, 'projects': projects})
 
 def about_view(request):
