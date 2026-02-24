@@ -152,6 +152,33 @@
         .animate-in {
             animation: fadeIn 0.8s ease-out forwards;
         }
+
+        /* Message Styles */
+        .message {
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            color: white;
+            animation: fadeIn 0.5s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .message-success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22c55e;
+        }
+
+        .message-error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #ef4444;
+        }
+
+        .message-info {
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid #6366f1;
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
@@ -174,6 +201,16 @@
     </nav>
 
     <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div
+            class="message message-{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}error{% else %}info{% endif %}">
+            <i
+                class="fas {% if message.tags == 'success' %}fa-check-circle{% elif message.tags == 'error' %}fa-exclamation-circle{% else %}fa-info-circle{% endif %}"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
 

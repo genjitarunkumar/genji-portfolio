@@ -5,10 +5,8 @@ services:
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=portfolio_db
-      - POSTGRES_USER=portfolio_user
-      - POSTGRES_PASSWORD=portfolio_pass
+    env_file:
+      - .env
     ports:
       - "5433:5432"
 
