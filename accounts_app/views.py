@@ -39,7 +39,8 @@ def dashboard_view(request):
     from projects_app.models import Project
     
     profile, created = Profile.objects.get_or_create(user=request.user, defaults={'name': request.user.username})
-    projects_count = Project.objects.filter().count()
+    projects = Project.objects.all().order_by('-created_date')
+    projects_count = projects.count()
     
     if request.method == 'POST' and 'send_manual_email' in request.POST:
         target_email = request.POST.get('target_email')
@@ -58,7 +59,41 @@ def dashboard_view(request):
         except Exception as e:
             messages.error(request, f"Failed to send email: {str(e)}")
             
+    elif request.method == 'POST' and 'add_project' in request.POST:
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        tech_stack = request.POST.get('tech_stack')
+        github_link = request.POST.get('github_link', '')
+        live_demo = request.POST.get('live_demo', '')
+        
+        try:
+            Project.objects.create(
+                title=title,
+                description=description,
+                tech_stack=tech_stack,
+                github_link=github_link,
+                live_demo=live_demo
+            )
+            messages.success(request, f"Project '{title}' added successfully!")
+            return redirect('home')
+        except Exception as e:
+            messages.error(request, f"Failed to add project: {str(e)}")
+            
+    elif request.method == 'POST' and 'delete_project' in request.POST:
+        project_id = request.POST.get('project_id')
+        try:
+            project = Project.objects.get(id=project_id)
+            project_title = project.title
+            project.delete()
+            messages.success(request, f"Project '{project_title}' deleted successfully!")
+            return redirect('dashboard')
+        except Project.DoesNotExist:
+            messages.error(request, "Project not found.")
+        except Exception as e:
+            messages.error(request, f"Failed to delete project: {str(e)}")
+
     return render(request, 'accounts/dashboard.html', {
         'profile': profile,
+        'projects': projects,
         'projects_count': projects_count
     })

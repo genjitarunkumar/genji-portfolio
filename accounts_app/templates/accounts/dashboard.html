@@ -49,6 +49,30 @@
             </form>
         </div>
 
+        <!-- Add Project Form -->
+        <div
+            style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border); grid-column: 1 / -1;">
+            <h3 style="margin-bottom: 1.5rem;">Add New Project</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="add_project" value="1">
+                <input type="text" name="title" placeholder="Project Title" required
+                    style="width: 100%; margin-bottom: 1rem; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg); color: white;">
+                <textarea name="description" placeholder="Project Description" required rows="3"
+                    style="width: 100%; margin-bottom: 1rem; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg); color: white; resize: none;"></textarea>
+                <input type="text" name="tech_stack" placeholder="Tech Stack (e.g., Python, Django, React)" required
+                    style="width: 100%; margin-bottom: 1rem; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg); color: white;">
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <input type="url" name="github_link" placeholder="GitHub URL (optional)"
+                        style="flex: 1; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg); color: white;">
+                    <input type="url" name="live_demo" placeholder="Live URL (optional)"
+                        style="flex: 1; padding: 0.8rem; border-radius: 10px; border: 1px solid var(--glass-border); background: var(--bg); color: white;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 0.9rem;">Add
+                    Project</button>
+            </form>
+        </div>
+
         <!-- Site Stats -->
         <div
             style="background: var(--card-bg); padding: 2rem; border-radius: 20px; border: 1px solid var(--glass-border);">
@@ -58,6 +82,35 @@
                 </li>
                 <li style="margin-bottom: 0.5rem;">Unread Messages: <strong>0</strong></li>
             </ul>
+        </div>
+    </div>
+
+    <!-- Manage Existing Projects -->
+    <div style="margin-top: 3rem;">
+        <h2 style="margin-bottom: 2rem;">Manage Projects</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            {% for project in projects %}
+            <div
+                style="background: var(--card-bg); padding: 1.5rem; border-radius: 15px; border: 1px solid var(--glass-border);">
+                <h4 style="margin-bottom: 0.5rem; font-size: 1.2rem;">{{ project.title }}</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem;">{{ project.tech_stack }}
+                </p>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <a href="/admin/projects_app/project/{{ project.id }}/change/" class="btn btn-outline"
+                        style="padding: 0.5rem 1rem; font-size: 0.8rem;">Edit</a>
+                    <form method="POST" onsubmit="return confirm('Are you sure you want to delete this project?');"
+                        style="margin: 0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="delete_project" value="1">
+                        <input type="hidden" name="project_id" value="{{ project.id }}">
+                        <button type="submit" class="btn btn-primary"
+                            style="padding: 0.5rem 1rem; font-size: 0.8rem; background: #dc2626; border-color: #dc2626;">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% empty %}
+            <p style="color: var(--text-muted);">No projects found.</p>
+            {% endfor %}
         </div>
     </div>
 </div>
