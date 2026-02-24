@@ -15,6 +15,9 @@ def contact_view(request):
         
         # Send Emails
         try:
+            print(f"\n📧 DEBUG: Starting email process...")
+            print(f"📧 Sending to Admin: tarunkumargenji@gmail.com")
+            
             # 1. Email to YOU (Admin)
             send_mail(
                 subject=f"🔥 New Portfolio Query from {name}",
@@ -23,7 +26,9 @@ def contact_view(request):
                 recipient_list=['tarunkumargenji@gmail.com'],
                 fail_silently=False,
             )
+            print(f"✅ Admin email sent successfully!")
             
+            print(f"📧 Sending to Visitor: {email}")
             # 2. Email to the USER (Visitor)
             send_mail(
                 subject="Thank you for reaching out - Tarun Kumar Genji",
@@ -32,22 +37,27 @@ def contact_view(request):
                 recipient_list=[email],
                 fail_silently=False,
             )
+            print(f"✅ Visitor email sent successfully!")
+            
         except Exception as e:
-            print(f"Email Error: {str(e)}")
-            # Even if email fails, we still want to save to DB and continue to WhatsApp
+            print("\n" + "❌"*25)
+            print(f"📧 EMAIL SENDING FAILED!")
+            print(f"Error Message: {str(e)}")
+            print("❌"*25 + "\n")
             pass
             
         from accounts_app.models import Profile
         profile = Profile.objects.first()
         
-        # Success message should always show
-        messages.success(request, "Your message has been sent successfully!")
+        messages.success(request, f"Success! Emails have been sent to you and to {email}.")
         
-        # WhatsApp Redirect logic
-        if profile and profile.phone_number:
-            whatsapp_msg = f"Hi, I'm {name}. {message_content}"
-            whatsapp_url = f"https://wa.me/{profile.phone_number}?text={whatsapp_msg.replace(' ', '%20')}"
-            return redirect(whatsapp_url)
+        # WhatsApp Redirect (COMMENTED OUT TEMPORARILY FOR TESTING)
+        # if profile and profile.phone_number:
+        #     whatsapp_msg = f"Hi, I'm {name}. {message_content}"
+        #     whatsapp_url = f"https://wa.me/{profile.phone_number}?text={whatsapp_msg.replace(' ', '%20')}"
+        #     return redirect(whatsapp_url)
+            
+        return render(request, 'contact/contact.html')
             
         return redirect('contact')
         

@@ -139,13 +139,19 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Email Configuration (Placeholders)
+# Email Configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
 EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'tarunkumargenji@gmail.com')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+
+# If no password is provided, print emails to console instead of failing
+if not EMAIL_HOST_PASSWORD or 'YOUR_GMAIL_APP_PASSWORD' in EMAIL_HOST_PASSWORD:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    print("WARNING: EMAIL_HOST_PASSWORD not set. Emails will be printed to the terminal console.")
+
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 LOGIN_URL = 'login'
