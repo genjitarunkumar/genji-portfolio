@@ -50,14 +50,16 @@ load_dotenv()
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-njwlial@%su0s9p$to2*k&%eemhu)04g4c8c+1hmy-ug+4(@kj')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
-
-DATABASES = {
-    'default': dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600
-    )
+DATABASES ={
+    "default":{
+    "ENGINE":"django.db.backends.postgresql",
+    "NAME":"postgres",
+    "USER":"postgres",
+    "PASSWORD":"Tarun@94",
+    "HOST":"localhost",
+    "PORT":"5432",
+    }
 }
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
