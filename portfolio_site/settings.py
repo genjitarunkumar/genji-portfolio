@@ -47,9 +47,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # PRODUCTION SETTINGS
-DEBUG = os.getenv('DEBUG', 'False') == 'True'
+DEBUG = True
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-njwlial@%su0s9p$to2*k&%eemhu)04g4c8c+1hmy-ug+4(@kj')
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+ALLOWED_HOSTS = ["*"]
 
 DATABASES = {
     "default": {
@@ -66,7 +66,7 @@ if os.getenv("DATABASE_URL"):
         conn_health_checks=True,
     )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = 'staticfiles'
 # Using CompressedStaticFilesStorage prevents collectstatic from crashing if a file path is missing in CSS
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
@@ -142,7 +142,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_URL = '/media/'
