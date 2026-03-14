@@ -275,10 +275,10 @@
             <li><a href="/resume/">Resume</a></li>
             <li><a href="/contact/">Contact</a></li>
             {% if user.is_authenticated %}
-            <li><a href="/accounts/dashboard/">Dashboard</a></li>
+            <li><a href="/accounts/dashboard/" style="color: var(--primary); font-weight: 700;">Dashboard</a></li>
             <li><a href="/accounts/logout/">Logout</a></li>
             {% else %}
-            <li><a href="/accounts/login/">Login</a></li>
+            <li><a href="/accounts/login/" class="btn btn-outline" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Login / Dashboard</a></li>
             {% endif %}
         </ul>
     </nav>

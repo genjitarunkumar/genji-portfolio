@@ -16,9 +16,10 @@ django.setup()
 # Run migrations and seed data at startup to ensure /tmp/db.sqlite3 is initialized in every cold start
 try:
     call_command("migrate", interactive=False)
-    # Automatically seed data if the profile is missing (common on Vercel cold starts)
+    # Automatically seed data if important data is missing (common on Vercel cold starts)
     from accounts_app.models import Profile
-    if not Profile.objects.exists():
+    from projects_app.models import Project
+    if not Profile.objects.exists() or not Project.objects.exists():
         from seed_data import seed
         seed()
 except Exception as e:
