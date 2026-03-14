@@ -47,21 +47,31 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # PRODUCTION SETTINGS
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-njwlial@%su0s9p$to2*k&%eemhu)04g4c8c+1hmy-ug+4(@kj')
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
-DATABASES ={
-    "default":{
-    "ENGINE":"django.db.backends.postgresql",
-    "NAME":"postgres",
-    "USER":"postgres",
-    "PASSWORD":"Tarun@94",
-    "HOST":"localhost",
-    "PORT":"5432",
+
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "postgres",
+        "USER": "postgres",
+        "PASSWORD": "Tarun@94",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
+
+# Use database from Railway or production environment if DATABASE_URL is set
+if os.getenv("DATABASE_URL"):
+    DATABASES["default"] = dj_database_url.config(
+        conn_max_age=600,
+        ssl_require=False  # Railway uses private networks, ssl_require can cause issues sometimes, but let's just let dj_database_url handle it natively
+    )
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Using CompressedStaticFilesStorage prevents collectstatic from crashing if a file path is missing in CSS
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 MIDDLEWARE = [
