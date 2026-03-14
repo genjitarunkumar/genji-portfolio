@@ -53,20 +53,17 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "Tarun@94",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
 # Use database from Railway or production environment if DATABASE_URL is set
 if os.getenv("DATABASE_URL"):
     DATABASES["default"] = dj_database_url.config(
+        default=os.getenv("DATABASE_URL"),
         conn_max_age=600,
-        ssl_require=False  # Railway uses private networks, ssl_require can cause issues sometimes, but let's just let dj_database_url handle it natively
+        conn_health_checks=True,
     )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
