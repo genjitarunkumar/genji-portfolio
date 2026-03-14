@@ -43,9 +43,11 @@
                     <i class="fas fa-user-circle" style="color: var(--primary);"></i> Professional Bio
                 </h2>
                 <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem;">
-                    {{ profile.bio|default:"I am a Bachelor of Technology student specialization in Computer Science and
-                    Engineering at Lovely Professional University. I focus on developing impactful software solutions
-                    using modern technologies like Python and AI." }}
+                <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 1rem;">
+                    {{ profile.bio|default:"I am a Bachelor of Technology student specializing in Computer Science and Engineering. I have a strong foundation in academic coursework and a deep interest in technology and programming, especially in developing impactful software solutions using Python, Django, and modern AI algorithms." }}
+                </p>
+                <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem;">
+                    My career goal is to become a proficient Software Engineer or AI Researcher where I can tackle complex problems and contribute to innovative projects. I have an enduring passion for learning new technologies, pushing my boundaries, and continuously evolving my technical skill set.
                 </p>
                 {% load static %}
                 <a href="{% static 'resume.pdf' %}" download class="btn btn-primary"

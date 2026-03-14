@@ -24,3 +24,8 @@ def projects_list(request):
 def project_detail(request, slug):
     project = get_object_or_404(Project, slug=slug)
     return render(request, 'project_detail.html', {'project': project})
+
+def resume_view(request):
+    profile = Profile.objects.first()
+    projects = Project.objects.all().order_by('-created_date')
+    return render(request, 'resume.html', {'profile': profile, 'projects': projects})

@@ -9,14 +9,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
+            --primary: #818cf8;
+            --primary-dark: #6366f1;
+            --secondary: #c084fc;
+            --bg: #0b1120;
+            --card-bg: rgba(30, 41, 59, 0.7);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glow: 0 0 20px rgba(129, 140, 248, 0.4);
         }
 
         * {
@@ -33,12 +35,61 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background Elements */
+        .ambient-bg {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out alternate;
+        }
+
+        .blob-1 {
+            top: -10%; left: -10%;
+            width: 500px; height: 500px;
+            background: rgba(99, 102, 241, 0.15);
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -20%; right: -10%;
+            width: 600px; height: 600px;
+            background: rgba(192, 132, 252, 0.12);
+            animation-delay: -5s;
+            animation-direction: alternate-reverse;
+        }
+
+        .blob-3 {
+            top: 40%; left: 60%;
+            width: 400px; height: 400px;
+            background: rgba(56, 189, 248, 0.1);
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
         }
 
         nav {
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--glass-border);
+            background: rgba(11, 17, 32, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding: 1rem 2rem;
             position: sticky;
             top: 0;
@@ -107,34 +158,59 @@
         }
 
         .btn {
-            padding: 0.75rem 1.5rem;
-            border-radius: 12px;
+            padding: 0.8rem 1.8rem;
+            border-radius: 99px;
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
-            display: inline-block;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
             cursor: pointer;
             border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            z-index: -1;
+            transition: opacity 0.3s;
+            opacity: 0;
         }
 
         .btn-primary {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
+            box-shadow: var(--glow);
         }
 
         .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(192, 132, 252, 0.5);
         }
 
         .btn-outline {
-            border: 1px solid var(--glass-border);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--text-main);
-            background: transparent;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
         }
 
         .btn-outline:hover {
-            background: var(--glass);
+            border-color: transparent;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: var(--glow);
+        }
+
+        .btn-outline:hover::before {
+            opacity: 1;
         }
 
         @keyframes fadeIn {
@@ -184,12 +260,19 @@
 </head>
 
 <body>
+    <!-- Ambient Animated Background -->
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
     <nav>
         <a href="/" class="logo">Tarun Kumar</a>
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/about/">About</a></li>
             <li><a href="/projects/">Projects</a></li>
+            <li><a href="/resume/">Resume</a></li>
             <li><a href="/contact/">Contact</a></li>
             {% if user.is_authenticated %}
             <li><a href="/accounts/dashboard/">Dashboard</a></li>

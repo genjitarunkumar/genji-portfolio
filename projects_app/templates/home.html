@@ -10,32 +10,71 @@
     }
 
     .skill-badge {
-        background: var(--glass);
-        border: 1px solid var(--glass-border);
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         padding: 0.6rem 1.2rem;
-        border-radius: 12px;
-        transition: 0.3s;
+        border-radius: 99px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: default;
     }
 
     .skill-badge:hover {
         border-color: var(--primary);
-        background: rgba(99, 102, 241, 0.1);
-        transform: translateY(-3px);
+        background: rgba(129, 140, 248, 0.1);
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 10px 20px rgba(129, 140, 248, 0.3);
+        color: white;
+    }
+
+    /* Infinite Scrolling Wrapper */
+    .skills-scroller {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        padding: 1rem 0;
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+    
+    .skills-track {
+        display: flex;
+        width: max-content;
+        animation: scroll 30s linear infinite;
+        gap: 1.5rem;
+    }
+
+    .skills-scroller:hover .skills-track {
+        animation-play-state: paused;
+    }
+
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 0.75rem)); }
     }
 
     .project-card {
         background: var(--card-bg);
-        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         padding: 2.5rem;
         border-radius: 24px;
-        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
     }
 
     .project-card:hover {
-        transform: scale(1.02);
-        border-color: var(--primary);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        transform: translateY(-10px) scale(1.02);
+        border-color: rgba(129, 140, 248, 0.4);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(129, 140, 248, 0.1);
     }
 </style>
 {% endblock %}
@@ -45,11 +84,12 @@
     <div class="animate-in" style="text-align: center;">
         <h1 style="font-size: 5rem; font-weight: 800; line-height: 1.1; margin-bottom: 2rem;">
             Building the <span
-                style="background: linear-gradient(135deg, #818cf8, #c084fc); -webkit-background-clip: text; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Future</span>
+                style="background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Future</span>
             with Code.
         </h1>
         <p style="font-size: 1.4rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 3rem;">
-            Hi, I'm <strong style="color: var(--text-main);">TARUN</strong>.
+            Hi, I'm <strong style="color: var(--text-main);">TARUN</strong>. <br>
+            <span style="font-size: 1.2rem; display: block; margin-top: 0.5rem;">B.Tech Computer Science Student | Passionate about building intelligent and scalable solutions.</span>
         </p>
 
         <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap;">
@@ -87,14 +127,26 @@
         <h2 style="font-size: 2.5rem;">Core Expertise</h2>
         <div style="height: 2px; flex: 1; background: var(--glass-border); margin-left: 2rem;"></div>
     </div>
-    <div style="display: flex; flex-wrap: wrap; gap: 1.2rem;">
-        {% for skill in profile.skills.split %}
-        <div class="skill-badge">
-            <span style="color: var(--primary); font-weight: 600;">{{ skill }}</span>
+    <div class="skills-scroller">
+        <div class="skills-track">
+            <!-- First Set -->
+            {% for skill in profile.skills.split %}
+            <div class="skill-badge">
+                <span style="color: var(--primary); font-weight: 600;"><i class="fas fa-check-circle" style="margin-right: 8px;"></i>{{ skill }}</span>
+            </div>
+            {% empty %}
+            <span style="color: var(--text-muted);">Python, Django, AI, ML, React, Docker</span>
+            {% endfor %}
+
+            <!-- Cloned Set for Infinite Loop -->
+            {% for skill in profile.skills.split %}
+            <div class="skill-badge" aria-hidden="true">
+                <span style="color: var(--primary); font-weight: 600;"><i class="fas fa-check-circle" style="margin-right: 8px;"></i>{{ skill }}</span>
+            </div>
+            {% empty %}
+            <span style="color: var(--text-muted);" aria-hidden="true">Python, Django, AI, ML, React, Docker</span>
+            {% endfor %}
         </div>
-        {% empty %}
-        <span style="color: var(--text-muted);">Python, Django, AI, ML, React, Docker</span>
-        {% endfor %}
     </div>
 </section>
 
@@ -107,12 +159,12 @@
         {% for project in projects %}
         <div class="project-card">
             <div
-                style="height: 8px; width: 40px; background: var(--primary); border-radius: 4px; margin-bottom: 1.5rem;">
+                style="height: 8px; width: 40px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 4px; margin-bottom: 1.5rem;">
             </div>
             <h3 style="font-size: 1.8rem; margin-bottom: 1rem;">{{ project.title }}</h3>
             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem;">
                 {% for tech in project.tech_stack.split %}
-                <span style="font-size: 0.8rem; color: var(--text-muted);">#{{ tech }}</span>
+                <span style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 0.3rem 0.8rem; border-radius: 99px; font-size: 0.8rem; color: var(--text-muted);">#{{ tech }}</span>
                 {% endfor %}
             </div>
             <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem; line-height: 1.7;">{{

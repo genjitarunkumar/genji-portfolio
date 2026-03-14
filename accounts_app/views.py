@@ -91,6 +91,23 @@ def dashboard_view(request):
             messages.error(request, "Project not found.")
         except Exception as e:
             messages.error(request, f"Failed to delete project: {str(e)}")
+            
+    elif request.method == 'POST' and 'edit_project' in request.POST:
+        project_id = request.POST.get('project_id')
+        try:
+            project = Project.objects.get(id=project_id)
+            project.title = request.POST.get('title')
+            project.description = request.POST.get('description')
+            project.tech_stack = request.POST.get('tech_stack')
+            project.github_link = request.POST.get('github_link', '')
+            project.live_demo = request.POST.get('live_demo', '')
+            project.save()
+            messages.success(request, f"Project '{project.title}' updated successfully!")
+            return redirect('home')
+        except Project.DoesNotExist:
+            messages.error(request, "Project not found.")
+        except Exception as e:
+            messages.error(request, f"Failed to update project: {str(e)}")
 
     return render(request, 'accounts/dashboard.html', {
         'profile': profile,

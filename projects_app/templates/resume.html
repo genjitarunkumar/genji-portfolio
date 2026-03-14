@@ -1,0 +1,380 @@
+{% extends 'base.html' %}
+
+{% block title %}Resume | Tarun Kumar Genji{% endblock %}
+
+{% block extra_css %}
+<style>
+    .resume-section {
+        background: var(--card-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 24px;
+        padding: 3rem;
+        margin-bottom: 3rem;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .resume-section::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0; height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+
+    .resume-section:hover {
+        border-color: rgba(129, 140, 248, 0.4);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(129, 140, 248, 0.1);
+        transform: translateY(-5px);
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--text-main);
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid var(--glass-border);
+        position: relative;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -1px; left: 0;
+        width: 100px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .section-title i {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 1.8rem;
+    }
+
+    .resume-item {
+        position: relative;
+        padding-left: 2.5rem;
+        margin-bottom: 2.5rem;
+        transition: transform 0.3s;
+    }
+
+    .resume-item:hover {
+        transform: translateX(10px);
+    }
+
+    .resume-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        box-shadow: 0 0 10px var(--primary);
+        z-index: 2;
+    }
+
+    .resume-item::after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 22px;
+        bottom: -30px;
+        width: 2px;
+        background: linear-gradient(to bottom, var(--primary) 0%, transparent 100%);
+        opacity: 0.3;
+    }
+
+    .resume-item:last-child::after {
+        display: none;
+    }
+
+    .item-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        margin-bottom: 0.3rem;
+        color: white;
+    }
+
+    .item-subtitle {
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.5px;
+    }
+
+    .item-date {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+        background: rgba(255,255,255,0.05);
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 99px;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .skill-category {
+        margin-bottom: 2.5rem;
+    }
+
+    .skill-category-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 1.2rem;
+        color: white;
+    }
+
+    .skill-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+
+    .skill-chip {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 0.6rem 1.2rem;
+        border-radius: 99px;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: default;
+    }
+
+    .skill-chip:hover {
+        border-color: var(--primary);
+        color: white;
+        background: rgba(129, 140, 248, 0.1);
+        box-shadow: 0 0 15px rgba(129, 140, 248, 0.2);
+        transform: translateY(-2px);
+    }
+    
+    .stagger-1 { animation-delay: 0.1s; }
+    .stagger-2 { animation-delay: 0.2s; }
+    .stagger-3 { animation-delay: 0.3s; }
+    .stagger-4 { animation-delay: 0.4s; }
+    .stagger-5 { animation-delay: 0.5s; }
+    .stagger-6 { animation-delay: 0.6s; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="animate-in" style="max-width: 900px; margin: 0 auto;">
+    
+    <header style="text-align: center; margin-bottom: 5rem;" class="animate-in">
+        <div style="display: inline-block; padding: 0.5rem 1.5rem; background: rgba(129, 140, 248, 0.1); border-radius: 99px; border: 1px solid rgba(129, 140, 248, 0.2); color: var(--primary); font-weight: 600; margin-bottom: 1.5rem; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem;">Professional Profile</div>
+        <h1 style="font-size: 4rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1;">My <span style="background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Interactive CV</span></h1>
+        <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto;">A comprehensive overview of my academic journey, technical skills, and professional experience.</p>
+        <div style="margin-top: 2.5rem;">
+            {% load static %}
+            <a href="{% static 'resume.pdf' %}" download class="btn btn-primary">
+                <i class="fas fa-download"></i> Download PDF Version
+            </a>
+        </div>
+    </header>
+
+    <!-- Career Objective -->
+    <section class="resume-section animate-in stagger-1">
+        <h2 class="section-title"><i class="fas fa-bullseye"></i> Career Objective</h2>
+        <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.9;">
+            Highly motivated Computer Science student seeking to leverage rigorous academic training and hands-on project experience in a challenging <strong style="color: white;">Software Engineering</strong> or <strong style="color: white;">AI Researcher</strong> role. Eager to contribute to innovative technological solutions while continuing to grow my expertise in Python, Machine Learning, and modern software development practices.
+        </p>
+    </section>
+
+    <!-- Education -->
+    <section class="resume-section animate-in stagger-2">
+        <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
+        
+        <div class="resume-item">
+            <h3 class="item-title">Bachelor of Technology in Computer Science and Engineering</h3>
+            <div class="item-subtitle">Lovely Professional University, Punjab, India</div>
+            <div class="item-date">August 2023 - Present</div>
+            <p style="color: var(--text-muted);">
+                <strong>CGPA:</strong> 6.60
+            </p>
+        </div>
+
+        <div class="resume-item">
+            <h3 class="item-title">Intermediate Education</h3>
+            <div class="item-subtitle">Sri Viswa Junior College, Pm pallem, Vishakhapatnam</div>
+            <div class="item-date">April 2021 - March 2023</div>
+            <p style="color: var(--text-muted);"><strong>Percentage:</strong> 85.4%</p>
+        </div>
+
+        <div class="resume-item">
+            <h3 class="item-title">Matriculation</h3>
+            <div class="item-subtitle">Chalapathi Public School, Chodavaram, Vishakhapatnam</div>
+            <div class="item-date">April 2020 - March 2021</div>
+            <p style="color: var(--text-muted);"><strong>Percentage:</strong> 100%</p>
+        </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section class="resume-section animate-in stagger-3">
+        <h2 class="section-title"><i class="fas fa-laptop-code"></i> Technical Skills</h2>
+        
+        <div class="skill-category">
+            <h3 class="skill-category-title">Languages & Web Technologies</h3>
+            <div class="skill-chips">
+                <span class="skill-chip">Python</span>
+                <span class="skill-chip">C++</span>
+                <span class="skill-chip">C</span>
+                <span class="skill-chip">JavaScript</span>
+                <span class="skill-chip">HTML</span>
+                <span class="skill-chip">CSS</span>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3 class="skill-category-title">Data & Analytics</h3>
+            <div class="skill-chips">
+                <span class="skill-chip">MySQL</span>
+                <span class="skill-chip">Power BI</span>
+                <span class="skill-chip">Excel</span>
+                <span class="skill-chip">Data Preprocessing</span>
+                <span class="skill-chip">Model Evaluation</span>
+                <span class="skill-chip">ML Fundamentals</span>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3 class="skill-category-title">Tools & Platforms</h3>
+            <div class="skill-chips">
+                <span class="skill-chip">GitHub</span>
+                <span class="skill-chip">Git</span>
+                <span class="skill-chip">VS Code</span>
+            </div>
+        </div>
+
+        <div class="skill-category">
+            <h3 class="skill-category-title">Soft Skills</h3>
+            <div class="skill-chips">
+                <span class="skill-chip">Problem-Solving</span>
+                <span class="skill-chip">Analytical-Thinking</span>
+                <span class="skill-chip">Adaptability</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training & Experiece -->
+    <section class="resume-section animate-in stagger-4">
+        <h2 class="section-title"><i class="fas fa-briefcase"></i> Training & Experience</h2>
+        
+        <div class="resume-item">
+            <h3 class="item-title">Data Structures & Algorithms with C++</h3>
+            <div class="item-subtitle">Cipher Schools</div>
+            <div class="item-date">May 2025</div>
+            <p style="color: var(--text-muted);">
+                Solved structured DSA problems involving arrays, linked lists, trees, and sorting techniques, strengthening algorithmic efficiency and logical reasoning.
+            </p>
+        </div>
+
+        <div class="resume-item">
+            <h3 class="item-title">C Programming Fundamentals</h3>
+            <div class="item-subtitle">CSE Pathshala</div>
+            <div class="item-date">March 2024</div>
+            <p style="color: var(--text-muted);">
+                Completed intensive live training covering core programming concepts and implemented mini-projects to strengthen procedural programming skills.
+            </p>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="resume-section animate-in stagger-5">
+        <h2 class="section-title"><i class="fas fa-project-diagram"></i> Key Projects</h2>
+        
+        <div class="resume-item">
+            <h3 class="item-title">Agriculture AI Chat Bot</h3>
+            <div class="item-subtitle">Tech Stack: Python, Streamlit, Machine Learning</div>
+            <div class="item-date">June - August 2025</div>
+            <p style="color: var(--text-muted); margin-bottom: 0.5rem; line-height: 1.6;">
+                - Developed an AI-powered chatbot to assist farmers with crop planning and yield estimation by analyzing inputs such as land size and crop type.<br>
+                - Implemented ML-based logic to provide fertilizer recommendations, profit analysis, and farming insights.
+            </p>
+        </div>
+
+        <div class="resume-item">
+            <h3 class="item-title">Pulse Monitoring System</h3>
+            <div class="item-subtitle">Tech Stack: Biomedical Sensors, Embedded Systems, Real-Time Signal Processing, Microcontroller</div>
+            <div class="item-date">January - March 2023</div>
+            <p style="color: var(--text-muted); margin-bottom: 0.5rem; line-height: 1.6;">
+                - Designed a health monitoring solution using biomedical sensors to measure pulse rate and vital parameters, applying real-time signal processing techniques for accurate readings.
+            </p>
+        </div>
+    </section>
+
+    <!-- Certificates -->
+    <section class="resume-section animate-in stagger-6">
+        <h2 class="section-title"><i class="fas fa-certificate"></i> Certifications</h2>
+        
+        <div class="resume-item">
+            <h3 class="item-title">Social Networks - NPTEL Certificate</h3>
+            <div class="item-subtitle">NPTEL</div>
+            <div class="item-date">April 2025</div>
+        </div>
+        
+        <div class="resume-item">
+            <h3 class="item-title">Data Structures and Algorithm</h3>
+            <div class="item-subtitle">neo Colab</div>
+            <div class="item-date">December 2024</div>
+        </div>
+
+        <div class="resume-item">
+            <h3 class="item-title">Responsive Web Design</h3>
+            <div class="item-subtitle">FreeCodeCamp</div>
+        </div>
+    </section>
+
+    <!-- Achievements -->
+    <section class="resume-section animate-in stagger-6">
+        <h2 class="section-title"><i class="fas fa-gamepad"></i> Extracurricular Activities</h2>
+        <ul style="color: var(--text-muted); padding-left: 2rem; line-height: 1.8;">
+            <li>Attended workshop related to soft skills in Lovely Professional University (April 2024).</li>
+            <li>Participated in Coding Ninjas hackathon to build websites using frontend technologies (HTML, CSS, JavaScript) (February 2024).</li>
+        </ul>
+    </section>
+
+    <!-- Competitive Programming / Hackathons -->
+    <section class="resume-section">
+        <h2 class="section-title"><i class="fas fa-code"></i> Competitive Programming & Hackathons</h2>
+        <div class="resume-item">
+            <h3 class="item-title">Competitive Programming Profiles</h3>
+            <div class="item-subtitle">Active on multiple platforms</div>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">
+                - <strong>LeetCode:</strong> <a href="#" style="color: var(--primary);">[Your Profile Link]</a> - Solved [X]+ Data Structure and Algorithm problems.<br>
+                - <strong>HackerRank:</strong> <a href="#" style="color: var(--primary);">[Your Profile Link]</a> - [Badge/Rank] level in Problem Solving.<br>
+                - <strong>GeeksforGeeks / Codeforces:</strong> <a href="#" style="color: var(--primary);">[Your Profile Link]</a>
+            </p>
+        </div>
+        <div class="resume-item">
+            <h3 class="item-title">[Hackathon Name]</h3>
+            <div class="item-subtitle">[Role/Position]</div>
+            <div class="item-date">[Year]</div>
+            <p style="color: var(--text-muted);">Developed a prototype for [Problem Statement]. Gained experience in rapid development and teamwork.</p>
+        </div>
+    </section>
+
+    <!-- Research & Publications -->
+    <section class="resume-section">
+        <h2 class="section-title"><i class="fas fa-book-open"></i> Research & Publications</h2>
+        
+        <div class="resume-item">
+            <h3 class="item-title">Future Research placeholder</h3>
+            <div class="item-subtitle">Target Area: Artificial Intelligence / Software Engineering</div>
+            <p style="color: var(--text-muted);">Currently researching innovative approaches in [Topic]. Aiming to publish findings in upcoming academic conferences or journals.</p>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
