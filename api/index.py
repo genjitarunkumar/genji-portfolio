@@ -13,10 +13,15 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "portfolio_site.settings")
 
 django.setup()
 
-# Run migrations at startup to ensure /tmp/db.sqlite3 is initialized in every cold start
+# Run migrations and seed data at startup to ensure /tmp/db.sqlite3 is initialized in every cold start
 try:
     call_command("migrate", interactive=False)
+    # Automatically seed data if the profile is missing (common on Vercel cold starts)
+    from accounts_app.models import Profile
+    if not Profile.objects.exists():
+        from seed_data import seed
+        seed()
 except Exception as e:
-    print(f"Migration error during startup: {e}")
+    print(f"Startup error (migrations/seeding): {e}")
 
 app = get_wsgi_application()
