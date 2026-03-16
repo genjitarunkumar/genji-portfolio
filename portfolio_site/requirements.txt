@@ -1,9 +1,0 @@
-# Deploy trigger: 2024-02-24 00:25
-django
-djangorestframework
-gunicorn
-psycopg2-binary
-python-dotenv
-dj-database-url
-whitenoise
-Pillow
