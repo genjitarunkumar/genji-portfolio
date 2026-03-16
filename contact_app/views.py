@@ -24,7 +24,7 @@ def contact_view(request):
             send_mail(
                 subject=f"🔥 New Portfolio Query: {name}",
                 message=f"Hello Tarun,\n\nYou have a new message from your portfolio.\n\nSender: {name}\nSender Email: {email}\n\nMessage:\n{message_content}",
-                from_email=settings.EMAIL_HOST_USER,
+                from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[settings.EMAIL_HOST_USER],
                 fail_silently=False,
             )
@@ -38,7 +38,7 @@ def contact_view(request):
             send_mail(
                 subject="Thank you for contacting Tarun Kumar Genji",
                 message=f"Hi {name},\n\nThank you for reaching out via my portfolio! I have received your message and will get back to you shortly.\n\nYour Message Reference:\n\"{message_content}\"\n\nBest Regards,\nTarun Kumar Genji",
-                from_email=settings.EMAIL_HOST_USER,
+                from_email=settings.DEFAULT_FROM_EMAIL,
                 recipient_list=[email],
                 fail_silently=False,
             )
